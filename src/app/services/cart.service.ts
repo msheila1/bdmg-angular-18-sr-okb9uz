@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  addItemToCart(product: any) {
-    throw new Error('Method not implemented.');
-  }
-  private carrinho = new BehaviorSubject<any[]>([]);
-  carrinho$ = this.carrinho.asObservable();
+  [x: string]: any;
+  private cartItems: Product[] = [];
+  private cartSubject = new BehaviorSubject<Product[]>(this.cartItems);
 
-  adicionarAoCarrinho(produto: any): void {
-    const carrinhoAtual = this.carrinho.getValue();
-    this.carrinho.next([...carrinhoAtual, produto]);
+  getCartItems() {
+    return this.cartSubject.asObservable();
   }
 
-  limparCarrinho(): void {
-    this.carrinho.next([]);
+  addToCart(product: Product) {
+    this.cartItems.push(product);
+    this.cartSubject.next(this.cartItems);
   }
 
-  obterItensCarrinho(): any[] {
-    return this.carrinho.getValue();
+  clearCart() {
+    this.cartItems = [];
+    this.cartSubject.next(this.cartItems);
   }
 }

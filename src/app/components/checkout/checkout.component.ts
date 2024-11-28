@@ -1,24 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../services/product.service';
+// src/app/components/checkout/checkout.component.ts
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
+import { OrderService } from '../../services/order.service';
+import { Order } from '../../models/order.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  styleUrls: ['./checkout.component.scss'],
+  imports: [CommonModule],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CheckoutComponent implements OnInit {
-  products = [];
+export class CheckoutComponent {
 
-  constructor(private productService: ProductService, private cartService: CartService) {}
+  checkoutForm: FormGroup;
+  //cartItems = this.cartService.getCart();
 
-  ngOnInit(): void {
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data;
+  constructor(
+    private cartService: CartService,
+    private orderService: OrderService,
+    private fb: FormBuilder
+  ) {
+    this.checkoutForm = this.fb.group({
+      name: [''],
+      email: [''],
+      phone: [''],
+      address: ['']
     });
   }
 
-  addToCart(product: any): void {
-    this.cartService.addItemToCart(product);
+  onSubmit() {
+    const order: Order = {
+      ...this.checkoutForm.value,
+     // items: this.cartItems
+    };
+    this.orderService.addOrder(order);
+    this.cartService.clearCart();
   }
 }
