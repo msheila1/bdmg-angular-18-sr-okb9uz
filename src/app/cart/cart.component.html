@@ -1,0 +1,21 @@
+<h3>CART</h3>
+<mat-list role="list">
+  @for(cartItem of (cart$ | async); track cartItem.id){
+
+  <mat-list-item role="listitem" class="cart-item">
+    <img matListItemAvatar [src]="cartItem.image" [alt]="cartItem.title" />
+    <p matListItemTitle>{{ cartItem.title }}</p>
+    <div matListItemLine>
+      <p>
+        {{ cartItem.cartAmount }} X {{ cartItem.price | currency : "BRL" }} =
+        {{ cartItem.cartAmount * cartItem.price | currency : "BRL" }}
+      </p>
+      <button mat-button (click)="deleteFromCart(cartItem)">REMOVE</button>
+    </div>
+  </mat-list-item>
+  }
+</mat-list>
+
+<p>TOTAL = {{ cartTotal$ | async | currency : "BRL" }}</p>
+
+<button mat-button (click)="cleanCart()">CLEAN CART</button>

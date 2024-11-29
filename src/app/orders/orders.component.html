@@ -1,0 +1,19 @@
+<h3>ORDERS</h3>
+
+<section>
+  <ul>
+    @for(order of (order$ | async); track order.id){
+    <li class="order">
+      <h4>{{ order.userInfo.firstName }} {{ order.userInfo.lastName }}</h4>
+      <p>
+        {{ order.userInfo.address?.street }}
+      </p>
+      <ul>
+        @for(products of order.products; track products.id){
+        <li>{{ products.title }}</li>
+        }
+      </ul>
+    </li>
+    }
+  </ul>
+</section>

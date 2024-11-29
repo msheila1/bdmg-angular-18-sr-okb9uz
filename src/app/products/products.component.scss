@@ -1,0 +1,112 @@
+$primary-color: #106678; 
+$secondary-color: #f50057; 
+$text-color: #333; 
+$price-color: #4caf50;
+$button-bg: $primary-color; 
+$button-hover-bg: darken($button-bg, 10%); 
+$border-radius: 8px; 
+$spacing: 16px; 
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); // Responsivo
+  gap: $spacing;
+  padding: $spacing;
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: $spacing;
+    border: 1px solid #e0e0e0;
+    border-radius: $border-radius;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+
+    mat-card-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: $primary-color;
+      margin: 15px;
+      padding: 5px; 
+      text-align: center;
+      line-height: 1.2;
+      text-transform: capitalize;
+      border: 1px solid $primary-color; 
+      border-radius: $border-radius; 
+    }
+
+    mat-card-subtitle {
+      font-size: 1.6rem; 
+      font-weight: bold; 
+      color: $price-color; 
+      text-align: center; 
+      margin: 10px 0; 
+      display: block; 
+    }
+
+    button {
+      margin-top: auto;
+      padding: 10px $spacing;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      background-color: $button-bg;
+      border: none;
+      border-radius: $border-radius;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &:hover {
+        background-color: $button-hover-bg;
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      &:disabled {
+        background-color: lighten($button-bg, 20%);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card {
+    mat-card-title {
+      font-size: 1.2rem;
+    }
+
+    mat-card-subtitle {
+      font-size: 1rem;
+    }
+
+    button {
+      font-size: 0.9rem;
+      padding: 8px 12px;
+    }
+  }
+}
+
